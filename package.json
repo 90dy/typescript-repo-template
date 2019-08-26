@@ -1,9 +1,9 @@
 {
   "name": "typescript-repo-template",
-  "version": "0.0.0-alpha.0",
+  "version": "0.0.0-alpha.1",
   "description": "Template to dev everythings in typescript",
-  "main": "build/index.js",
-  "types": "build/index.d.ts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "repository": "github:gponsinet/typescript-repo-template",
   "bin": {
     "typescript-repo-template": "bin/typescript-repo-template"
@@ -19,18 +19,17 @@
   ],
   "scripts": {
     "prepare": "npm run build",
-    "pretest": "npm run build",
-    "posttest": "npm run check",
-    "preversion": "npm run check",
-    "version": "npm run compile && git add -A .",
-    "postversion": "git push && git push --tags",
     "compatibility": "npx browserslist",
     "upgrade": "npx ncu -u",
-    "type-check": "tsc --noEmit",
-    "type-check:watch": "npm run type-check -- --watch",
+    "check:types": "tsc --noEmit",
+    "check:types:watch": "npm run check:types -- --watch",
     "build": "npm run build:types && npm run build:js",
     "build:types": "tsc --declaration --declarationMap",
-    "build:js": "babel src --out-dir lib --extensions \".js,.jsx,.ts,.tsx\" --source-maps inline"
+    "build:js": "babel src --out-dir lib --extensions \".js,.jsx,.ts,.tsx\" --source-maps inline",
+    "bump": "release-it --preRelease --github.preRelease",
+    "bump:alpha": "release-it --preRelease --preReleaseId=alpha --npm.tag=alpha --github.preRelease",
+    "bump:beta": "release-it --preRelease --preReleaseId=beta --npm.tag=beta --github.preRelease",
+    "bump:rc": "release-it --preRelease --preReleaseId=rc --npm.tag=rc --github.preRelease"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
@@ -48,6 +47,7 @@
     "@types/node": "^12.7.2",
     "@types/react": "^16.9.2",
     "npm-check-updates": "^3.1.21",
+    "release-it": "^12.3.6",
     "typescript": "~3.5.3"
   },
   "dependencies": {
@@ -55,5 +55,16 @@
   },
   "browserslist": [
     "defaults"
-  ]
+  ],
+  "release-it": {
+    "hooks": {
+      "before:bump": "npm run prepare"
+    },
+    "git": {
+      "commitMessage": "chore(release): bump v${version}"
+    },
+    "github": {
+      "release": false
+    }
+  }
 }
