@@ -1,0 +1,41 @@
+{
+    "name": "typescript-repo-template",
+    "version": "0.0.0-alpha.0",
+    "description": "Template to dev everythings in typescript",
+    "main": "build/src/index.js",
+    "types": "build/src/index.d.ts",
+    "repository": "github:gponsinet/typescript-repo-template",
+    "bin": {
+        "typescript-repo-template": "bin/typescript-repo-template"
+    },
+    "license": "MIT",
+    "keywords": [
+        "template",
+        "typescript",
+        "docker",
+        "cli",
+        "native",
+        "web"
+    ],
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "check": "gts check",
+        "clean": "gts clean",
+        "compile": "tsc -p .",
+        "run": "node build/src/index.js",
+        "fix": "gts fix",
+        "prepare": "npm run compile",
+        "pretest": "npm run compile",
+        "posttest": "npm run check"
+    },
+    "devDependencies": {
+        "gts": "^1.1.0",
+        "npm-check-updates": "^3.1.21",
+        "semver": "^6.3.0",
+        "typescript": "~3.5.3"
+    },
+    "dependencies": {
+        "@types/node": "^12.7.2",
+        "docopt": "^0.6.2"
+    }
+}
