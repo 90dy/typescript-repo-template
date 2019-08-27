@@ -2,8 +2,8 @@
   "name": "typescript-repo-template",
   "version": "0.0.0-alpha.0",
   "description": "Template to dev everythings in typescript",
-  "main": "build/src/index.js",
-  "types": "build/src/index.d.ts",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
   "repository": "github:gponsinet/typescript-repo-template",
   "bin": {
     "typescript-repo-template": "bin/typescript-repo-template"
@@ -18,24 +18,42 @@
     "web"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "check": "gts check",
-    "clean": "gts clean",
-    "compile": "tsc -p .",
-    "run": "node build/src/index.js",
-    "fix": "gts fix",
-    "prepare": "npm run compile",
-    "pretest": "npm run compile",
-    "posttest": "npm run check"
+    "prepare": "npm run build",
+    "pretest": "npm run build",
+    "posttest": "npm run check",
+    "preversion": "npm run check",
+    "version": "npm run compile && git add -A .",
+    "postversion": "git push && git push --tags",
+    "compatibility": "npx browserslist",
+    "upgrade": "npx ncu -u",
+    "type-check": "tsc --noEmit",
+    "type-check:watch": "npm run type-check -- --watch",
+    "build": "npm run build:types && npm run build:js",
+    "build:types": "tsc --declaration --declarationMap",
+    "build:js": "babel src --out-dir lib --extensions \".js,.jsx,.ts,.tsx\" --source-maps inline"
   },
   "devDependencies": {
-    "gts": "^1.1.0",
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/plugin-proposal-export-default-from": "^7.5.2",
+    "@babel/plugin-proposal-export-namespace-from": "^7.5.2",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.4.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
+    "@babel/plugin-proposal-optional-chaining": "^7.2.0",
+    "@babel/plugin-proposal-partial-application": "^7.4.4",
+    "@babel/plugin-proposal-pipeline-operator": "^7.5.0",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-typescript": "^7.3.3",
+    "@types/node": "^12.7.2",
+    "@types/react": "^16.9.2",
     "npm-check-updates": "^3.1.21",
-    "semver": "^6.3.0",
     "typescript": "~3.5.3"
   },
   "dependencies": {
-    "@types/node": "^12.7.2",
     "docopt": "^0.6.2"
-  }
+  },
+  "browserslist": [
+    "defaults"
+  ]
 }
