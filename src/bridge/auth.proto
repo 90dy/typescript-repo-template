@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package bridge;
+
+import "google/protobuf/api.proto";
+import "google/protobuf/empty.proto";
+
+
+// Auth permit to authenticate on server and returns an api
+service Auth {
+  // Descriptor returns the api descriptor of Auth
+  rpc Descriptor(google.protobuf.Empty) returns (google.protobuf.Api);
+  // ByUsernameAndPassword returns the api descriptor
+  rpc ByUsernameAndPassword(UsernameAndPassword) returns (google.protobuf.Api);
+}
+
+message UsernameAndPassword {
+  string username = 1;
+  string password = 2;
+}
+

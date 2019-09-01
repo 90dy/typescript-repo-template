@@ -1,11 +1,12 @@
 import * as child_process from 'child_process';
 import { docopt } from 'docopt';
 
-import * as helpers from '../helper';
 import {
   description as pkgDescription,
   version as pkgVersion,
 } from '../package.json';
+
+import { bridge } from './bridge/auth.pb'
 
 const doc = `typescript-repo-template version ${pkgVersion}
 
