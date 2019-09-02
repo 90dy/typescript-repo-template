@@ -18,7 +18,6 @@
     "web"
   ],
   "scripts": {
-    "install": "napa",
     "prepare": "npm run gen && npm run build",
     "compatibility": "npx browserslist",
     "upgrade": "npx ncu -u",
@@ -31,11 +30,8 @@
     "bump:alpha": "release-it --preRelease --preReleaseId=alpha --npm.tag=alpha --github.preRelease",
     "bump:beta": "release-it --preRelease --preReleaseId=beta --npm.tag=beta --github.preRelease",
     "bump:rc": "release-it --preRelease --preReleaseId=rc --npm.tag=rc --github.preRelease",
-    "gen": "npm run gen:pb",
-    "gen:pb": "npm run gen:pb:hbs && npm run gen:pb:js && npm run gen:pb:ts",
-    "gen:pb:hbs": "find src -type f -name '*.proto' | xargs pbhbs -p node_modules/@protocolbuffers/protobuf/src -t src -o src",
-    "gen:pb:js": "find src -type f -name '*.proto' | sed 's/\\(.*\\).proto$/\"\\1.pb.js\" \"\\1.proto\"/' | xargs -n 2 pbjs -p node_modules/@protocolbuffers/protobuf/src -t static --es6 -w es6 -o",
-    "gen:pb:ts": "find src -type f -name '*.pb.js' | sed 's/\\(.*\\).pb.js$/\"\\1.pb.d.ts\" \"\\1.pb.js\"/' | xargs -n 2 pbts -o"
+    "gen": "npm run gen:protoc",
+    "gen:protoc": "find src -type f -name '*.proto' | xargs protoc --plugin=protoc-gen-ts=./node_modules/.bin/protoc-gen-ts --js_out=import_style=commonjs,binary:. --ts_out=."
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
@@ -51,23 +47,14 @@
     "@babel/plugin-transform-typescript": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0",
+    "@types/google-protobuf": "^3.7.1",
     "@types/node": "^12.7.3",
     "@types/react": "^16.9.2",
-    "napa": "^3.0.0",
     "npm-check-updates": "^3.1.21",
     "pbhbs": "^0.1.0",
     "release-it": "^12.3.6",
+    "ts-protoc-gen": "^0.11.0",
     "typescript": "~3.6.2"
-  },
-  "dependencies": {
-    "protobufjs": "~6.8.8"
-  },
-  "napa": {
-    "@protocolbuffers/protobuf": "git+https://github.com/protocolbuffers/protobuf.git"
-  },
-  "napa-config": {
-    "cache": false,
-    "cache-path": "../.napa-cache"
   },
   "browserslist": [
     "defaults"

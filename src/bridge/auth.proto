@@ -5,7 +5,6 @@ package bridge;
 import "google/protobuf/api.proto";
 import "google/protobuf/empty.proto";
 
-
 // Auth permit to authenticate on server and returns an api
 service Auth {
   // Descriptor returns the api descriptor of Auth
