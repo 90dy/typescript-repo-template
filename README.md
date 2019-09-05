@@ -12,9 +12,6 @@
   <a href="https://github.com/gponsinet/typescript-repo-template/blob/master/LICENSE">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" target="_blank" />
   </a>
-  <a href="https://twitter.com/_godfpsn">
-    <img alt="Twitter: _godfpsn" src="https://img.shields.io/twitter/follow/_godfpsn.svg?style=social" target="_blank" />
-  </a>
 </p>
 
 > WIP 👨‍💻 Template repository for typescript or javascript project
@@ -24,14 +21,13 @@
 ## Install
 
 ```sh
-npm install -g typescript-repo-template
+npm install
 ```
 
 ## Author
 
 👤 **Godefroy Ponsinet**
 
-* Twitter: [@_godfpsn](https://twitter.com/_godfpsn)
 * Github: [@gponsinet](https://github.com/gponsinet)
 
 ## 🤝 Contributing
@@ -41,10 +37,6 @@ Contributions, issues and feature requests are welcome!<br />Feel free to check 
 ## Show your support
 
 Give a ⭐️ if this project helped you!
-
-<a href="https://www.patreon.com/gponsinet">
-  <img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="160">
-</a>
 
 ## 📝 License
 
