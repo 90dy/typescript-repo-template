@@ -1,14 +1,22 @@
 {
   "name": "typescript-repo-template",
   "version": "0.0.0-beta.2",
-  "description": "Template to dev everythings in typescript",
+  "description": "WIP 👨‍💻 Template repository for typescript or javascript project",
+  "author": "Godefroy Ponsinet",
+  "license": "MIT",
+  "homepage": "https://github.com/gponsinet/typescript-repo-template#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gponsinet/typescript-repo-template"
+  },
+  "bugs": {
+    "url": "https://github.com/gponsinet/typescript-repo-template/issues"
+  },
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "repository": "github:gponsinet/typescript-repo-template",
   "bin": {
     "typescript-repo-template": "bin/typescript-repo-template"
   },
-  "license": "MIT",
   "keywords": [
     "template",
     "typescript",
@@ -26,12 +34,13 @@
     "build": "npm run build:ts && npm run build:js",
     "build:ts": "tsc --declaration --declarationMap",
     "build:js": "babel src --out-dir lib --extensions \".js,.jsx,.ts,.tsx\" --source-maps inline",
-    "bump": "release-it --preRelease --github.preRelease",
+    "bump:pre": "release-it --preRelease --github.preRelease",
     "bump:alpha": "release-it --preRelease --preReleaseId=alpha --npm.tag=alpha --github.preRelease",
     "bump:beta": "release-it --preRelease --preReleaseId=beta --npm.tag=beta --github.preRelease",
     "bump:rc": "release-it --preRelease --preReleaseId=rc --npm.tag=rc --github.preRelease",
     "gen": "npm run gen:protoc",
-    "gen:protoc": "find src -type f -name '*.proto' | xargs protoc --plugin=protoc-gen-ts=./node_modules/.bin/protoc-gen-ts --js_out=import_style=commonjs,binary:. --ts_out=."
+    "gen:protoc": "find src -type f -name '*.proto' | xargs protoc --plugin=protoc-gen-ts=./node_modules/.bin/protoc-gen-ts --js_out=import_style=commonjs,binary:. --ts_out=.",
+    "gen:readme": "readme"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
@@ -52,6 +61,7 @@
     "@types/react": "^16.9.2",
     "npm-check-updates": "^3.1.21",
     "pbhbs": "^0.1.0",
+    "readme-md-generator": "^0.6.2",
     "release-it": "^12.3.6",
     "ts-protoc-gen": "^0.11.0",
     "typescript": "~3.6.2"
@@ -61,7 +71,8 @@
   ],
   "release-it": {
     "hooks": {
-      "before:bump": "npm run prepare"
+      "before:bump": "npm run prepare",
+      "after:bump": "npm run gen:readme -- yes"
     },
     "git": {
       "commitMessage": "chore(release): bump v${version}"
