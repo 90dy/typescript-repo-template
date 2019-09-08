@@ -1,12 +1,9 @@
-import * as child_process from 'child_process';
-import { docopt } from 'docopt';
+import { docopt } from 'docopt'
 
 import {
   description as pkgDescription,
   version as pkgVersion,
-} from '../package.json';
-
-import { bridge } from './bridge/auth.pb'
+} from '../package.json'
 
 const doc = `typescript-repo-template version ${pkgVersion}
 
@@ -18,7 +15,7 @@ ${pkgDescription}
 
 Options:
   -h --help                   Show this
-  -v --version                Show current version`;
+  -v --version                Show current version`
 
 declare class TypescriptRepoTemplateOptions {
   '--help': boolean;
@@ -26,28 +23,28 @@ declare class TypescriptRepoTemplateOptions {
 }
 
 function help(): number {
-  console.log(doc);
-  return 0;
+  console.log(doc)
+  return 0
 }
 
 function version(): number {
-  console.log(`typescript-repo-template version ${pkgVersion}`);
-  return 0;
+  console.log(`typescript-repo-template version ${pkgVersion}`)
+  return 0
 }
 
 export async function main(argv: string[]): Promise<number> {
   const options: TypescriptRepoTemplateOptions = docopt(doc, {
-    argv: process.argv.slice(2),
+    argv: argv.slice(2),
     help: false,
-  });
+  })
 
   if (options['--help'] !== false) {
-    return help();
+    return help()
   }
 
   if (options['--version'] !== false) {
-    return version();
+    return version()
   }
 
-  return 0;
+  return 0
 }

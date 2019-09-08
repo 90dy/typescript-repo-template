@@ -29,11 +29,13 @@
     "prepare": "npm run gen && npm run build",
     "compatibility": "npx browserslist",
     "upgrade": "npx ncu -u",
-    "check:ts": "tsc --noEmit",
-    "check:ts:watch": "npm run check:ts -- --watch",
+    "lint": "find src -type f | grep '.js\\|.jsx\\|.ts\\|.tsx' | xargs eslint bin/*",
+    "lint:fix": "npm run lint -- --fix",
+    "check:types": "tsc --noEmit",
+    "check:types:watch": "npm run check:ts -- --watch",
     "build": "npm run build:ts && npm run build:js",
-    "build:ts": "tsc --declaration --declarationMap",
-    "build:js": "babel src --out-dir lib --extensions \".js,.jsx,.ts,.tsx\" --source-maps inline",
+    "build:ts": "npm run check:types && tsc --declaration --declarationMap",
+    "build:js": "npm run lint:fix && babel src --out-dir lib --extensions \".js,.jsx,.ts,.tsx\" --source-maps inline",
     "bump:pre": "release-it --preRelease --github.preRelease",
     "bump:alpha": "release-it --preRelease --preReleaseId=alpha --npm.tag=alpha --github.preRelease",
     "bump:beta": "release-it --preRelease --preReleaseId=beta --npm.tag=beta --github.preRelease",
@@ -60,12 +62,23 @@
     "@types/google-protobuf": "^3.7.1",
     "@types/node": "^12.7.3",
     "@types/react": "^16.9.2",
+    "@typescript-eslint/eslint-plugin": "^2.1.0",
+    "@typescript-eslint/parser": "^2.1.0",
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.3.0",
+    "eslint-config-prettier": "^6.2.0",
+    "eslint-plugin-dependencies": "^2.4.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
     "npm-check-updates": "^3.1.21",
     "pbhbs": "^0.1.0",
+    "prettier": "^1.18.2",
     "readme-md-generator": "^0.6.2",
     "release-it": "^12.3.6",
     "ts-protoc-gen": "^0.11.0",
-    "typescript": "~3.6.2"
+    "typescript": "^3.6.2"
   },
   "browserslist": [
     "defaults"
@@ -84,6 +97,10 @@
   },
   "dependencies": {
     "@improbable-eng/grpc-web": "^0.11.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.14.3",
     "grpc": "^1.23.3"
   }
 }
