@@ -6,11 +6,11 @@ var google_protobuf_api_pb = require("google-protobuf/google/protobuf/api_pb")
 var google_protobuf_empty_pb = require("google-protobuf/google/protobuf/empty_pb")
 var grpc = require("@improbable-eng/grpc-web").grpc
 
-var Auth = (function() {
+var Auth = (function () {
   function Auth() {}
   Auth.serviceName = "bridge.Auth"
   return Auth
-})()
+}())
 
 Auth.Descriptor = {
   methodName: "Descriptor",
@@ -37,11 +37,7 @@ function AuthClient(serviceHost, options) {
   this.options = options || {}
 }
 
-AuthClient.prototype.descriptor = function descriptor(
-  requestMessage,
-  metadata,
-  callback
-) {
+AuthClient.prototype.descriptor = function descriptor(requestMessage, metadata, callback) {
   if (arguments.length === 2) {
     callback = arguments[1]
   }
@@ -51,7 +47,7 @@ AuthClient.prototype.descriptor = function descriptor(
     metadata: metadata,
     transport: this.options.transport,
     debug: this.options.debug,
-    onEnd: function(response) {
+    onEnd: function (response) {
       if (callback) {
         if (response.status !== grpc.Code.OK) {
           var err = new Error(response.statusMessage)
@@ -65,18 +61,14 @@ AuthClient.prototype.descriptor = function descriptor(
     },
   })
   return {
-    cancel: function() {
+    cancel: function () {
       callback = null
       client.close()
     },
   }
 }
 
-AuthClient.prototype.byUsernameAndPassword = function byUsernameAndPassword(
-  requestMessage,
-  metadata,
-  callback
-) {
+AuthClient.prototype.byUsernameAndPassword = function byUsernameAndPassword(requestMessage, metadata, callback) {
   if (arguments.length === 2) {
     callback = arguments[1]
   }
@@ -86,7 +78,7 @@ AuthClient.prototype.byUsernameAndPassword = function byUsernameAndPassword(
     metadata: metadata,
     transport: this.options.transport,
     debug: this.options.debug,
-    onEnd: function(response) {
+    onEnd: function (response) {
       if (callback) {
         if (response.status !== grpc.Code.OK) {
           var err = new Error(response.statusMessage)
@@ -100,7 +92,7 @@ AuthClient.prototype.byUsernameAndPassword = function byUsernameAndPassword(
     },
   })
   return {
-    cancel: function() {
+    cancel: function () {
       callback = null
       client.close()
     },
@@ -108,3 +100,4 @@ AuthClient.prototype.byUsernameAndPassword = function byUsernameAndPassword(
 }
 
 exports.AuthClient = AuthClient
+
