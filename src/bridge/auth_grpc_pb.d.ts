@@ -3,17 +3,17 @@
 // package: bridge
 // file: src/bridge/auth.proto
 
-import * as src_bridge_auth_pb from "../../src/bridge/auth_pb";
-import * as google_protobuf_api_pb from "google-protobuf/google/protobuf/api_pb";
-import * as google_protobuf_empty_pb from "google-protobuf/google/protobuf/empty_pb";
-import * as grpc from "grpc";
+import * as src_bridge_auth_pb from "../../src/bridge/auth_pb"
+import * as google_protobuf_api_pb from "google-protobuf/google/protobuf/api_pb"
+import * as google_protobuf_empty_pb from "google-protobuf/google/protobuf/empty_pb"
+import * as grpc from "grpc"
 
 interface IAuthService extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
   descriptor: grpc.MethodDefinition<google_protobuf_empty_pb.Empty, google_protobuf_api_pb.Api>;
   byUsernameAndPassword: grpc.MethodDefinition<src_bridge_auth_pb.UsernameAndPassword, google_protobuf_api_pb.Api>;
 }
 
-export const AuthService: IAuthService;
+export const AuthService: IAuthService
 
 export class AuthClient extends grpc.Client {
   constructor(address: string, credentials: grpc.ChannelCredentials, options?: object);

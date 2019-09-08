@@ -1,13 +1,13 @@
 // package: bridge
 // file: src/bridge/auth.proto
 
-import * as jspb from "google-protobuf";
-import * as google_protobuf_api_pb from "google-protobuf/google/protobuf/api_pb";
-import * as google_protobuf_empty_pb from "google-protobuf/google/protobuf/empty_pb";
+import * as jspb from "google-protobuf"
+import * as google_protobuf_api_pb from "google-protobuf/google/protobuf/api_pb"
+import * as google_protobuf_empty_pb from "google-protobuf/google/protobuf/empty_pb"
 
 export class UsernameAndPassword extends jspb.Message {
   getUsername(): string;
-  setUsername(value: string): void;
+  setUsername(value: string): void
 
   getPassword(): string;
   setPassword(value: string): void;
