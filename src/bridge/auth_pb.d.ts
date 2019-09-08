@@ -7,7 +7,7 @@ import * as google_protobuf_empty_pb from "google-protobuf/google/protobuf/empty
 
 export class UsernameAndPassword extends jspb.Message {
   getUsername(): string;
-  setUsername(value: string): void
+  setUsername(value: string): void;
 
   getPassword(): string;
   setPassword(value: string): void;
