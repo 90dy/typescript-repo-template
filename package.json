@@ -25,26 +25,6 @@
     "native",
     "web"
   ],
-  "scripts": {
-    "prepare": "npm run gen && npm run build",
-    "compatibility": "npx browserslist",
-    "upgrade": "npx ncu -u",
-    "lint": "find src -type f | grep '.js\\|.jsx\\|.ts\\|.tsx' | xargs eslint bin/*",
-    "lint:fix": "npm run lint -- --fix",
-    "check:types": "tsc --noEmit",
-    "check:types:watch": "npm run check:ts -- --watch",
-    "build": "npm run build:ts && npm run build:js",
-    "build:ts": "npm run check:types && tsc --declaration --declarationMap",
-    "build:js": "npm run lint:fix && babel src --out-dir lib --extensions \".js,.jsx,.ts,.tsx\" --source-maps inline",
-    "bump:pre": "release-it --preRelease --github.preRelease",
-    "bump:alpha": "release-it --preRelease --preReleaseId=alpha --npm.tag=alpha --github.preRelease",
-    "bump:beta": "release-it --preRelease --preReleaseId=beta --npm.tag=beta --github.preRelease",
-    "bump:rc": "release-it --preRelease --preReleaseId=rc --npm.tag=rc --github.preRelease",
-    "gen": "npm run gen:protoc:web && npm run gen:protoc:node",
-    "gen:protoc:web": "find src -type f -name '*.proto' | xargs protoc --plugin=protoc-gen-ts=./node_modules/.bin/protoc-gen-ts --js_out=import_style=commonjs,binary:. --ts_out=service=grpc-web:.",
-    "gen:protoc:node": "find src -type f -name '*.proto' | xargs protoc --plugin=protoc-gen-ts=./node_modules/.bin/protoc-gen-ts --js_out=import_style=commonjs,binary:. --ts_out=service=grpc-node:.",
-    "gen:readme": "readme"
-  },
   "devDependencies": {
     "@babel/cli": "^7.6.0",
     "@babel/core": "^7.6.0",
@@ -62,8 +42,8 @@
     "@types/google-protobuf": "^3.7.1",
     "@types/node": "^12.7.4",
     "@types/react": "^16.9.2",
-    "@typescript-eslint/eslint-plugin": "^2.1.0",
-    "@typescript-eslint/parser": "^2.1.0",
+    "@typescript-eslint/eslint-plugin": "^2.2.0",
+    "@typescript-eslint/parser": "^2.2.0",
     "babel-eslint": "^10.0.3",
     "eslint": "^6.3.0",
     "eslint-config-prettier": "^6.2.0",
@@ -76,7 +56,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-standard": "^4.0.1",
-    "npm-check-updates": "^3.1.21",
+    "npm-check-updates": "^3.1.22",
     "pbhbs": "^0.1.0",
     "prettier": "^1.18.2",
     "readme-md-generator": "^0.6.2",
@@ -93,8 +73,8 @@
   ],
   "release-it": {
     "hooks": {
-      "before:bump": "npm run prepare",
-      "after:bump": "npm run gen:readme -- --yes"
+      "before:bump": "make",
+      "after:bump": "make readme"
     },
     "git": {
       "commitMessage": "chore(release): bump v${version}"
