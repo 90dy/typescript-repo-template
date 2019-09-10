@@ -46,7 +46,7 @@ proto: deps \
 .PHONY: readme
 readme: README.md
 
-README.md: node_modules/.bin/readme
+README.md: node_modules/.bin/readme package.json
 	readme --yes
 
 .PHONY: lint
@@ -64,19 +64,19 @@ bump: bump.pre
 
 .PHONY: bump.pre
 bump.pre: node_modules/.bin/release-it
-	release-it --preRelease --github.preRelease
+	release-it --preRelease --github.preRelease --ci
 
 .PHONY: bump.alpha
 bump.alpha: node_modules/.bin/release-it
-	release-it --preRelease --preReleaseId=alpha --npm.tag=alpha --github.preRelease
+	release-it --preRelease --preReleaseId=alpha --npm.tag=alpha --github.preRelease --ci
 
 .PHONY: bump.beta
 bump.beta: node_modules/.bin/release-it
-	release-it --preRelease --preReleaseId=beta --npm.tag=beta --github.preRelease
+	release-it --preRelease --preReleaseId=beta --npm.tag=beta --github.preRelease --ci
 
 .PHONY: bump.rc
 bump.rc: node_modules/.bin/release-it
-	release-it --preRelease --preReleaseId=rc --npm.tag=rc --github.preRelease
+	release-it --preRelease --preReleaseId=rc --npm.tag=rc --github.preRelease --ci
 
 .PHONY: compat
 compat: node_modules/.bin/browserslist
