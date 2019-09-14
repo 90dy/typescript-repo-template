@@ -22,26 +22,30 @@ node_modules: package.json
 gen: deps proto readme
 
 .PHONY: proto
-proto: proto := $(shell find src -type f -name '*.proto')
-proto: deps \
-	$(patsubst src/%.proto, src/%_pb_grpc.d.ts, $(proto)) \
+proto := $(shell find src -type f -name '*.proto')
+proto: deps $(patsubst src/%.proto, src/%_grpc_pb.d.ts, $(proto)) \
+	$(patsubst src/%.proto, src/%_grpc_pb.js, $(proto)) \
 	$(patsubst src/%.proto, src/%_pb.d.ts, $(proto)) \
 	$(patsubst src/%.proto, src/%_pb.js, $(proto)) \
 	$(patsubst src/%.proto, src/%_pb_service.d.ts, $(proto)) \
 	$(patsubst src/%.proto, src/%_pb_service.js, $(proto))
 
-.NOTPARALLEL: %_pb_grpc.d.ts %_pb.d.ts %_pb.js %_pb_service.d.ts %_pb_service.js
-%_pb_grpc.d.ts %_pb.d.ts %_pb.js %_pb_service.d.ts %_pb_service.js: deps %.proto
-	protoc \
-		--plugin=protoc-gen-ts=./node_modules/.bin/protoc-gen-ts \
+.NOTPARALLEL: %_pb_grpc_pb.d.ts %_pb_grpc_pb.js %_pb.d.ts %_pb.js %_pb_service.d.ts %_pb_service.js
+%_grpc_pb.d.ts %_pb_grpc_pb.js %_pb.d.ts %_pb.js %_pb_service.d.ts %_pb_service.js: %.proto
+	grpc_tools_node_protoc \
+		--plugin=protoc-gen-ts=node_modules/.bin/protoc-gen-ts \
 		--js_out=import_style=commonjs,binary:. \
 		--ts_out=service=grpc-web:. \
 		$(proto)
-	protoc \
-		--plugin=protoc-gen-ts=./node_modules/.bin/protoc-gen-ts \
+	grpc_tools_node_protoc \
+		--plugin=protoc-gen-ts=node_modules/.bin/protoc-gen-ts \
+		--plugin=protoc-gen-grpc=node_modules/.bin/grpc_tools_node_protoc_plugin \
 		--js_out=import_style=commonjs,binary:. \
 		--ts_out=service=grpc-node:. \
+		--grpc_out=. \
 		$(proto)
+
+%.proto: node_modules/.bin/protoc-gen-ts node_modules/.bin/grpc_tools_node_protoc_plugin node_modules/.bin/grpc_tools_node_protoc
 
 .PHONY: readme
 readme: README.md
@@ -51,12 +55,12 @@ README.md: node_modules/.bin/readme package.json
 
 .PHONY: lint
 lint: deps gen
-	tsc --noEmit
+	# tsc --noEmit
 	eslint --fix $(shell find src -type f | grep -E '^.*(.js|.jsx|.ts|.tsx)$$') bin/*
 
 .PHONY: build
 build: deps gen lint
-	# tsc --declaration --declarationMap
+	tsc --declaration --declarationMap
 	babel src --out-dir lib --extensions '.js,.jsx,.ts,.tsx'
 
 .PHONY: bump
